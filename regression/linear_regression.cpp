@@ -87,20 +87,20 @@ static PyMethodDef linreg_methods[] = {
 };
 
 #ifdef PY3K
-static struct PyModuleDef linear_regression = {
+static struct PyModuleDef linreg_cpp = {
         PyModuleDef_HEAD_INIT,
-        "linear_regress"
+        "linreg_cpp"
         "Linear Regression",
         -1,
         linreg_methods
 };
 
-PyMODINIT_FUNC PyInit_linear_regression(void){
+PyMODINIT_FUNC PyInit_linreg_cpp(void){
     return PyModule_Create(&linear_regression);
 }
 #else
 PyMODINIT_FUNC linear_regression(){
-    Py_InitModule3("linear_regress", linreg_methods, "Linear Regression");
+    Py_InitModule3("linreg", linreg_methods, "Linear Regression");
 }
 #endif
 

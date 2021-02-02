@@ -3,3 +3,9 @@ venv/
 .DS_Store
 __pycache__
 **/*test*.py
+
+*.so
+**/build
+
+# Temporary
+regression/setup.py
