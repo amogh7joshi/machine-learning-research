@@ -198,7 +198,7 @@ class Discriminator(object):
       delta = np.matmul(delta, np.transpose(self.w2))
       if apply_gradients:
          if np.linalg.norm(dw2) > GRADIENT_CLIP:
-            dw3 = GRADIENT_CLIP / np.linalg.norm(dw2) * dw2
+            dw2 = GRADIENT_CLIP / np.linalg.norm(dw2) * dw2
          self.w2 += DISCRIMINATOR_STEP * dw2
          self.w2 = np.maximum(-WEIGHT_CLIP, np.minimum(WEIGHT_CLIP, self.w2))
          self.b2 += DISCRIMINATOR_STEP * db2
@@ -246,7 +246,7 @@ def train(generator, discriminator, iterations):
       generator.backpropagate(dloss_G)
       loss_Dt = loss_D + loss_Df
       if i % 100 == 0:
-         print('"Iter: {}, {} {} {}'.format(i, loss_D.item((0, 0)), loss_Df.item((0, 0)), loss_G.item((0, 0))))
+         print('Iter: {}, {} {} {}'.format(i, loss_D.item((0, 0)), loss_Df.item((0, 0)), loss_G.item((0, 0))))
 
 train(Generator, Discriminator, ITERATIONS)
 x = np.linspace(0, 10, 10)
