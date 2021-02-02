@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# A Generative Adversarial Network made to create sine & cosine waves.
+# A Generative adversarial Network made to create sine & cosine waves.
 
 DIM_Z = 1
 DIM_X = 10

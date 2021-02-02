@@ -9,10 +9,9 @@ import os
 import glob
 
 import cv2
-import imutils
-from imutils.contours import sort_contours
 
 # A neural network that can detect handwritten digits.
+# The first neural network I ever constructed without following any tutorials.
 
 # Remove images from a past test.
 capture = None
@@ -81,7 +80,7 @@ print("\nTotal: {}/{} --> Accuracy: {}%".format(
 # User-Input Images and their results.
 print("\nUser-Inputted Images:\n____________________")
 for index, path in enumerate(images):
-   print("Original Image: {}, Prediction: {}".format(
+   print("Original image: {}, Prediction: {}".format(
          correct_label_list[index],
          np.argmax(probability.predict(process_image(path)))))
    

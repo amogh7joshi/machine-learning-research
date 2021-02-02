@@ -220,7 +220,8 @@ def inception_v4(classes, input_shape = (299, 299, 3), weights = None):
          model.load_weights(path, by_name = True)
       elif os.path.isfile(weights):
          model.load_weights(weights)
-      else: raise ValueError("That is not a valid weights file")
+      else:
+         raise ValueError("That is not a valid weights file")
 
    return model
 

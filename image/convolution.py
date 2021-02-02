@@ -16,11 +16,11 @@ def convolve(image, kernel):
    :return: The convolved image.
    '''
 
-   # Image/Kernel Spatial Dimensions
+   # image/Kernel Spatial Dimensions
    image_height, image_width = image.shape[:2]
    kernel_height, kernel_width = kernel.shape[:2]
 
-   # Padding Image
+   # Padding image
    padding = (kernel_width - 1) // 2
    image = cv2.copyMakeBorder(image, padding, padding, padding, padding, cv2.BORDER_REPLICATE)
 
@@ -33,7 +33,7 @@ def convolve(image, kernel):
          sum = (reg * kernel).sum()
          output[y - padding, x - padding] = sum
 
-   # Bring Image to Correct Range
+   # Bring image to Correct Range
    output = rescale_intensity(output, in_range = (0, 255))
    output = (output * 255).astype(int)
 
@@ -43,7 +43,7 @@ def convolve(image, kernel):
 small = np.ones((7, 7), dtype = "float32") * (1.0 / (7 * 7))
 large = np.ones((21, 21), dtype = "float32") * (1.0 / (21 * 21))
 
-# Sharpening Kernel --> Sharpen Image Features
+# Sharpening Kernel --> Sharpen image Features
 sharpen = np.array((
    [0, -1, 0],
    [-1, 5, -1],
