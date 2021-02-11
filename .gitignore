@@ -9,3 +9,4 @@ __pycache__
 
 # Temporary
 regression/setup.py
+lda/
