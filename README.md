@@ -5,8 +5,11 @@ from scratch as I attempt to learn them, construction of existing model architec
 of the internal functions of them, or experimentation with different algorithms and constructs to see their result.
 
 Most of the implementations here are from scratch, using only NumPy and Matplotlib in order to use basic linear algebra operations 
-and visualize data, respectively, but the high-level neural network and other model construct implementations make use of  
+and visualize data, respectively, but the high-level neural network and other model construct implementations make use of
 the [Tensorflow](https://github.com/tensorflow/tensorflow) and [PyTorch](https://github.com/pytorch/pytorch) libraries.
+
+I primarily make these implementations in Python, due to not only the number of libraries but also because of the sheer ease that 
+is writing code in Python (at least to me). However, sometimes when testing optimization I will add constructs in C++.
 
 ## Navigation
 
