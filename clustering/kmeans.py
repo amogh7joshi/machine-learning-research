@@ -171,17 +171,39 @@ class KMeans(object):
       # Return the label.
       return class_label
 
-   def plot_scatter_data(self, X):
+   def plot_scatter_data(self, X, y = None):
       """Creates a scatter plot of provided data points."""
       self._assert_dimensions(X)
 
-      # Scatter data on the graph and display it.
+      # Generate list of colors.
+      _colors = mcolors.BASE_COLORS
+      _colors.update(mcolors.TABLEAU_COLORS)
+      _colors.update(mcolors.CSS4_COLORS)
+      colors = _colors.copy()
+
+      # Remove white entirely, that is reserved for the centroids.
       try:
-         plt.scatter(X[:, 0], X[:, 1], s = 150)
-      except Exception as e:
-         raise e
-      else:
-         plt.show()
+         del _colors['w'], colors['w']
+      except KeyError:
+         pass
+
+      # Change color names to numbers.
+      for indx, item in enumerate(_colors.keys()):
+         colors[indx] = colors[item]
+         del colors[item]
+
+      # Scatter data on the graph and display it.
+      for indx, x in enumerate(X):
+         try:
+            if y is not None: # If labels are provided, then plot with labels as well.
+               plt.scatter(x[0], x[1], s = 150, color = colors[y[indx]])
+            else: # Otherwise, just plot all of the data points.
+               plt.scatter(x[0], x[1], s = 150, color = 'crimson')
+         except Exception as e:
+            raise e
+
+      # Display the plot.
+      plt.show()
 
    def plot(self):
       """Creates a scatter plot of provided data points and centroids, with class labels."""
