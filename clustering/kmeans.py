@@ -47,6 +47,17 @@ class KMeans(object):
                raise ValueError(f"The provided data should be two-dimensional, "
                                 f"got {len(np.array(array).shape)} dimension(s).")
 
+   def create_blob_dataset(self, samples, features = None, state = None):
+      """A wrapper for the scikit-learn make_blobs method for custom cluster datasets."""
+      # Feature number will usually be the class dataset.
+      if features is None:
+         features = self.K
+
+      # Set the class data.
+      setattr(self, "dataset", make_blobs(n_samples = samples, n_features = features,
+                                          centers = features, random_state = state)[0])
+      return self
+
    @staticmethod
    def euclidean_distance(p1, p2):
       """Returns the euclidean distance between two points."""
@@ -130,8 +141,13 @@ class KMeans(object):
       """Fit the data, by iterating over different values for K and picking the best."""
       raise NotImplementedError("The _iter_fit method has not been implemented yet. ")
 
-   def fit(self, X, epochs = 100, tolerance = 0.001, verbose = True, visualize = True):
+   def fit(self, X = None, epochs = 100, tolerance = 0.001, verbose = True, visualize = True):
       """Fit the data using the K-Means algorithm."""
+      # If no dataset is provided, then there may be an already-set class dataset.
+      if X is None:
+         if hasattr(self, "dataset"):
+            X = self.dataset
+
       # Process verbosity, if set to True (prints out every 2% of training).
       if verbose:
          verbose = epochs // 50
@@ -144,6 +160,9 @@ class KMeans(object):
          self._iter_fit(X, epochs, tolerance, verbose, visualize)
       else: # Otherwise, if the number of clusters is provided, then automatically use that.
          self._fit_with_k_value(X, self.K, epochs, tolerance, verbose, visualize)
+
+      # Return self (for stacked method calls).
+      return self
 
    def predict(self, X, visualize = True):
       """Predicts the class label of a provided data point."""
@@ -205,7 +224,10 @@ class KMeans(object):
       # Display the plot.
       plt.show()
 
-   def plot(self):
+      # Return self (for stacked method calls).
+      return self
+
+   def plot(self, save = False):
       """Creates a scatter plot of provided data points and centroids, with class labels."""
       if self.data is None:
          # If the class has not been fit to data yet.
@@ -240,10 +262,21 @@ class KMeans(object):
 
       # Plot the centroids.
       for centroid in self.centroids:
-         plt.scatter(self.centroids[centroid][0], self.centroids[centroid][1], s = 130, marker = "x",
-                     linewidths = 5, facecolor = 'white', edgecolor = 'black')
+         plt.scatter(self.centroids[centroid][0], self.centroids[centroid][1], s = 130, marker = "X",
+                     linewidths = 5, facecolor = 'white', edgecolors = 'black', linewidth = 1)
 
       # Display the plot.
+      savefig = plt.gcf()
       plt.show()
+
+      # If requested to save, then save.
+      if save:
+         try:
+            savefig.savefig(save)
+         finally:
+            del savefig
+
+      # Return self (for stacked method calls).
+      return self
 
 
