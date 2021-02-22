@@ -19,6 +19,13 @@ and then navigate through its subdirectories if necessary. Some directories that
 - The `nn-basic` directory contains any implementations of neural networks from when I was first working with neural networks. 
 For example, my initial MNIST digit classification network resides there.
 
+## Implementations
+
+![kmeans-example](diagrams/kmeans-example.png)
+
+While currently I have been primarily experimenting with supervised learning techniques, e.g. regression and even basic classification
+using SVM/LDA, I have also tinkered with unsupervised learning, e.g. K-Means clustering (as pictured above), and PCA.
+
 ## Experimentation
 
 The `experimental` directory is a special directory, as anything in there is purely experimental research and often may not even function 
