@@ -11,6 +11,11 @@ the [Tensorflow](https://github.com/tensorflow/tensorflow) and [PyTorch](https:/
 I primarily make these implementations in Python, due to not only the number of libraries but also because of the sheer ease that 
 is writing code in Python (at least to me). However, sometimes when testing optimization I will add constructs in C++.
 
+![kmeans-example](diagrams/kmeans-example.png)
+
+While currently I have been primarily experimenting with supervised learning techniques, e.g. regression and even basic classification
+using SVM/LDA, I have also tinkered with unsupervised learning, e.g. K-Means clustering (as pictured above), and PCA.
+
 ## Navigation
 
 The directory names are quite literal, so to find different algorithms you can find the directory that contains the name 
@@ -21,10 +26,12 @@ For example, my initial MNIST digit classification network resides there.
 
 ## Implementations
 
-![kmeans-example](diagrams/kmeans-example.png)
+What use is there in constructing these algorithms if they are not applied to anything? The `implementations` directory contains actual
+usage of selected algorithms I've constructed on actual datasets, alongside a comparison to the [scikit-learn](https://github.com/scikit-learn/scikit-learn)
+implementation of the same algorithm (on the same dataset). Some implementations to note (a growing list) include:
 
-While currently I have been primarily experimenting with supervised learning techniques, e.g. regression and even basic classification
-using SVM/LDA, I have also tinkered with unsupervised learning, e.g. K-Means clustering (as pictured above), and PCA.
+1.  **Logistic Regression**: Implemented the Logistic Regression algorithm on the [Pima Indians Diabetes](https://www.kaggle.com/uciml/pima-indians-diabetes-database/discussion) 
+Dataset. On a train/test split of 0.75/0.25, the algorithm achieves an accuracy of 81.8%, compared to the scikit-learn equivalent of 82.4%.
 
 ## Experimentation
 
