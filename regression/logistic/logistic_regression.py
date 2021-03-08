@@ -179,7 +179,7 @@ class LogisticRegression(object):
       self._weights += grad * lr
 
    def fit(self, X = None, y = None, epochs = 10000, lr = 0.001, verbose = True,
-           add_intercept = True, l2_coef = 0.5):
+           add_intercept = True, l2_coef = 0.5, override_callback = False):
       """Fits the logistic regression algorithm to the provided data and labels."""
       # Dispatch to gather data.
       X, y = self._gather_data(X, y)
@@ -204,23 +204,24 @@ class LogisticRegression(object):
 
          # A default early stopping criterion, stops training if nothing improves
          # or if the loss actually starts to go up instead of down.
-         if len(loss_tracker) < (epochs // 10):
-            loss_tracker.append(self.binary_crossentropy(predictions, y))
-         else:
-            loss_tracker = loss_tracker[1:]
-            loss_tracker.append(self.binary_crossentropy(predictions, y))
+         if not override_callback:
+            if len(loss_tracker) < (epochs // 10):
+               loss_tracker.append(self.binary_crossentropy(predictions, y))
+            else:
+               loss_tracker = loss_tracker[1:]
+               loss_tracker.append(self.binary_crossentropy(predictions, y))
 
-            # Determine if the loss is not changing.
-            if np.all(np.isclose(loss_tracker, loss_tracker[0])):
-               print(f"Stopping training early because loss is not decreasing. "
-                     f"Final Loss: {self.binary_crossentropy(predictions, y)}")
-               break
+               # Determine if the loss is not changing.
+               if np.all(np.isclose(loss_tracker, loss_tracker[0])):
+                  print(f"Stopping training early because loss is not decreasing. "
+                        f"Final Loss: {self.binary_crossentropy(predictions, y)}")
+                  break
 
-            # Determine if the loss is actually going up.
-            if not np.diff(np.array(loss_tracker)).all() > 0:
-               print(f"Stopping training early because loss is increasing. "
-                     f"Final Loss: {self.binary_crossentropy(predictions, y)}")
-               break
+               # Determine if the loss is actually going up.
+               if not np.diff(np.array(loss_tracker)).all() > 0:
+                  print(f"Stopping training early because loss is increasing. "
+                        f"Final Loss: {self.binary_crossentropy(predictions, y)}")
+                  break
 
          # Dispatch to weight updating method.
          self._update_weights(X, predictions, y, lr = lr, l2_coef = l2_coef)
