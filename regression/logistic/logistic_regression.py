@@ -157,6 +157,9 @@ class LogisticRegression(object):
          # Data is just inputted as normal.
          X, y = X, y
 
+      # Set the data to the class.
+      self.data = (X, y)
+
       # Return the X and y values.
       return X, y
 
@@ -257,11 +260,25 @@ class LogisticRegression(object):
       # Convenience return for stacked method calls.
       return self
 
-   def predict(self, value):
+   def predict(self, X):
       """Predicts the class of a piece of data with the trained algorithm."""
       if self.data is None:
          raise ValueError("You need to fit the algorithm to data before trying to predict.")
-      return self.sigmoid(np.dot(value, self._weights))
+      if len(X.shape) == 1:
+         # A single piece of data has been passed.
+         return self.sigmoid(np.dot(X, self._weights))
+      else:
+         # Otherwise, we need to iterate over all of the passed items.
+         if self._is_data_intercepted:
+            # Determine if there is an intercept necessary.
+            intercept = np.ones((X.shape[0], 1))
+            X = np.hstack((intercept, X))
+
+         # Iterate over all of the input data.
+         predictions = []
+         for data_piece in X:
+            predictions.append(self.sigmoid(np.dot(data_piece, self._weights)))
+         return np.round(predictions)
 
    def plot_evaluation(self, X = None, y = None):
       """Plots the correct/incorrect predictions."""
