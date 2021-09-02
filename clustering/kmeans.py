@@ -30,8 +30,9 @@ class KMeans(object):
 
    def __len__(self):
       if self.K is None: # If class has not been fit (and K is uninitialized).
-         raise NotImplementedError("You have not provided a value for K, so you need to fit the "
-                                   "algorithm to training data first before trying to find its length.")
+         raise NotImplementedError(
+            "You have not provided a value for K, so you need to fit the "
+            "algorithm to training data first before trying to find its length.")
       return self.K
 
    @staticmethod
@@ -54,8 +55,9 @@ class KMeans(object):
          features = self.K
 
       # Set the class data.
-      setattr(self, "dataset", make_blobs(n_samples = samples, n_features = features,
-                                          centers = features, random_state = state)[0])
+      self.dataset = make_blobs(
+         n_samples = samples, n_features = features,
+         centers = features, random_state = state)[0]
       return self
 
    @staticmethod
@@ -76,7 +78,8 @@ class KMeans(object):
 
    @staticmethod
    def _is_optimized(previous_centroids, current_centroids, tolerance):
-      """Compares previous and current centroids to determine if K-Means has reached its optimization objective."""
+      """Compares previous and current centroids to determine if
+      K-Means has reached its optimization objective."""
       for centroid in current_centroids:
          # Select previous and current centroids.
          previous = previous_centroids[centroid]
@@ -90,8 +93,8 @@ class KMeans(object):
       return True
 
    def _select_classifications(self, X, K):
-      """The internal fitting algorithm, called for each individual iteration over the training data."""
-      # Create a dictionary of classifications.
+      """The internal fitting algorithm, called for each
+      individual iteration over the training data."""
       classifications = {}
       for i in range(K):
          classifications[i] = []
@@ -99,7 +102,10 @@ class KMeans(object):
       # Iterate over training data.
       for indx, point in enumerate(X):
          # Determine list of euclidean distances.
-         euclidean_distances = [self.euclidean_distance(point, centroid) for centroid in self.centroids.items()]
+         euclidean_distances = [
+            self.euclidean_distance(point, centroid)
+            for centroid in self.centroids.items()
+         ]
 
          # Create data classifications to update with.
          classifications[euclidean_distances.index(min(euclidean_distances))].append(point)
@@ -121,7 +127,8 @@ class KMeans(object):
 
          # Average the cluster data points to re-calculate centroids.
          for classification in self.classes:
-            self.centroids[classification] = np.average(self.classes[classification], axis = 0)
+            self.centroids[classification] = np.average(
+               self.classes[classification], axis = 0)
 
          # Print centroids if verbosity is enabled.
          if verbose:
@@ -231,8 +238,10 @@ class KMeans(object):
       """Creates a scatter plot of provided data points and centroids, with class labels."""
       if self.data is None:
          # If the class has not been fit to data yet.
-         raise ValueError("You need to fit the K-Means algorithm to training data before plotting it. If you want "
-                          "to make a scatter plot of points, use KMeans.plot_scatter_data().")
+         raise ValueError(
+            "You need to fit the K-Means algorithm to training "
+            "data before plotting it. If you just want to make a scatter "
+            "plot of points, use KMeans.plot_scatter_data().")
 
       # Generate list of colors.
       _colors = mcolors.BASE_COLORS
@@ -262,8 +271,10 @@ class KMeans(object):
 
       # Plot the centroids.
       for centroid in self.centroids:
-         plt.scatter(self.centroids[centroid][0], self.centroids[centroid][1], s = 130, marker = "X",
-                     linewidths = 5, facecolor = 'white', edgecolors = 'black', linewidth = 1)
+         plt.scatter(
+            self.centroids[centroid][0], self.centroids[centroid][1],
+            s = 130, marker = "X", linewidths = 5, facecolor = 'white',
+            edgecolors = 'black', linewidth = 1)
 
       # Display the plot.
       savefig = plt.gcf()

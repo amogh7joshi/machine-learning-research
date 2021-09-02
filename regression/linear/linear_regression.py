@@ -90,8 +90,9 @@ class LinearRegression(object):
    def plot(self, X = None, y = None):
       """Visualize the linear regression, optionally with provided data."""
       # Because of the potential ValueError with NumPy, this excessive syntax is necessary.
-      if (X is None and y is not None) or (y is None and X is not None): # Both X and y need to be provided, or neither.
-         raise ValueError("You need to provide both X and y values if you want to plot with data.")
+      if (X is None and y is not None) or (y is None and X is not None):
+         raise ValueError(
+            "You need to provide both X and y values if you want to plot with data.")
       if X is not None and y is not None: # Ensure X and y are the same size.
          self.assert_sizes(X, y)
 

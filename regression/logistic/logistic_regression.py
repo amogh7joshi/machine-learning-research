@@ -16,8 +16,9 @@ class LogisticRegression(object):
    def __len__(self):
       # Return the length of the weight array.
       if self._weights is None:
-         raise NotImplementedError("You need to fit the logistic regression to training data "
-                                   "to initialize the weights and therefore give them a length.")
+         raise NotImplementedError(
+            "You need to fit the logistic regression to training data "
+            "to initialize the weights and therefore give them a length.")
       else:
          return self._weights.shape[0]
 
@@ -102,9 +103,11 @@ class LogisticRegression(object):
       choices2 = np.random.randint(6, 10, size = (2, ))
 
       # Create the data for two different classes.
-      class1 = np.random.multivariate_normal([choices1[0], choices1[1]], [[1, .75], [.75, 1]], amount)
+      class1 = np.random.multivariate_normal(
+         [choices1[0], choices1[1]], [[1, .75], [.75, 1]], amount)
       label1 = np.zeros(amount)
-      class2 = np.random.multivariate_normal([choices2[0], choices2[1]], [[1, .75], [.75, 1]], amount)
+      class2 = np.random.multivariate_normal(
+         [choices2[0], choices2[1]], [[1, .75], [.75, 1]], amount)
       label2 = np.ones(amount)
 
       # Create stacked data and labels.
@@ -125,14 +128,17 @@ class LogisticRegression(object):
       # For binary logistic regression, there should only be two classes.
       if len(args) != 2:
          # In this case, we have received multiple arrays that are incorrect.
-         raise ValueError(f"Expected only two arrays, one containing data and one containing "
-                          f"labels, instead received {len(args)} arrays. ")
+         raise ValueError(
+            f"Expected only two arrays, one containing data and one containing "
+            f"labels, instead received {len(args)} arrays. ")
 
       # Validate the rest of the data features.
       if np.size(args[0], -1) != 2:
-         raise ValueError(f"Expected a two-dimensional data array, instead got {np.size(args[0], -1)}.")
+         raise ValueError(
+            f"Expected a two-dimensional data array, instead got {np.size(args[0], -1)}.")
       if not np.array_equal(args[1], args[1].astype(np.bool)):
-         raise ValueError("The label array should be binary (0s and 1s), instead got multiple classes.")
+         raise ValueError(
+            "The label array should be binary (0s and 1s), instead got multiple classes.")
 
       # Plot the data.
       plt.figure(figsize = (12, 8))
